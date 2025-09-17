@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigilancia Masiva y Control Social</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            width: 95%;
+            max-width: 1400px;
+            height: 90vh;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 60px;
+            display: none;
+            overflow-y: auto;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .slide h1 {
+            font-size: 4em;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .slide h2 {
+            font-size: 3.2em;
+            margin-bottom: 40px;
+            color: #fff;
+            border-bottom: 4px solid #4ecdc4;
+            padding-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .slide h3 {
+            font-size: 2.2em;
+            margin: 30px 0 20px 0;
+            color: #ffd93d;
+            font-weight: 500;
+        }
+
+        .slide h4 {
+            font-size: 1.6em;
+            margin: 20px 0 15px 0;
+            color: #ff6b6b;
+            font-weight: 500;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .slide ul {
+            margin-left: 30px;
+            margin-bottom: 25px;
+        }
+
+        .slide li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .slide ol {
+            margin-left: 30px;
+            margin-bottom: 25px;
+        }
+
+        .slide ol li {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 50px;
+            font-style: italic;
+            color: #b8e6b8;
+            font-weight: 300;
+        }
+
+        .authors {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 50px 0;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .authors h3 {
+            color: #4ecdc4;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .authors p {
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .date {
+            text-align: center;
+            font-size: 1.4em;
+            margin-top: 40px;
+            color: #ffd93d;
+            font-weight: 400;
+        }
+
+        .highlight {
+            background: rgba(255, 107, 107, 0.15);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border-left: 6px solid #ff6b6b;
+            font-size: 1.3em;
+            font-weight: 400;
+        }
+
+        .quote {
+            font-style: italic;
+            text-align: center;
+            font-size: 1.6em;
+            color: #4ecdc4;
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(78, 205, 196, 0.08);
+            border-radius: 20px;
+            border: 2px solid rgba(78, 205, 196, 0.3);
+            font-weight: 300;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-box h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .stat-box p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .stat-box ul {
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .stat-box li {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .country-flag {
+            font-size: 1.8em;
+            margin-right: 15px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.3em;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .warning {
+            background: rgba(255, 193, 7, 0.15);
+            border: 3px solid #ffc107;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            font-size: 1.3em;
+        }
+
+        .conclusion-box {
+            background: rgba(76, 175, 80, 0.15);
+            border: 3px solid #4caf50;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .bibliography {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .bibliography a {
+            color: #4ecdc4;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .bibliography a:hover {
+            text-decoration: underline;
+        }
+
+        .bibliography p {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .key-point {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #4ecdc4;
+            border-radius: 10px;
+        }
+
+        .bullet-large {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                width: 98%;
+                height: 95vh;
+            }
+            
+            .slide h1 {
+                font-size: 2.8em;
+            }
+            
+            .slide h2 {
+                font-size: 2.2em;
+            }
+            
+            .slide h3 {
+                font-size: 1.8em;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Portada -->
+        <div class="slide active" id="slide-1">
+            <h1>VIGILANCIA MASIVA Y CONTROL SOCIAL</h1>
+            <p class="subtitle">Uso de cámaras, inteligencia artificial y big data por gobiernos y empresas</p>
+            
+            <div class="authors">
+                <h3>🎓 Equipo de Trabajo:</h3>
+                <p>• Emanuel Buritica Guababe</p>
+                <p>• Wilber de Jesus Pineda Valois</p>
+                <p>• Edna Castañeda Zapata</p>
+            </div>
+            
+            <p class="date">📅 Septiembre 2025</p>
+        </div>
+
+        <!-- Slide 2: Introducción -->
+        <div class="slide" id="slide-2">
+            <h2>🔍 ¿Qué es la Vigilancia Masiva?</h2>
+            
+            <div class="key-point">
+                <p><strong>Recopilación sistemática y automatizada de información sobre poblaciones enteras</strong></p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <h4>📹 Cámaras Inteligentes</h4>
+                    <p>Reconocimiento facial en tiempo real</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>🤖 Inteligencia Artificial</h4>
+                    <p>Análisis predictivo de comportamientos</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>📊 Big Data</h4>
+                    <p>Almacenamiento masivo de datos personales</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                💭 "Cada click, cada paso, cada rostro... todo queda registrado"
+            </div>
+        </div>
+
+        <!-- Slide 3: Contexto Global -->
+        <div class="slide" id="slide-3">
+            <h2>🌍 Panorama Mundial</h2>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <h4><span class="country-flag">🇨🇳</span>China</h4>
+                    <p class="bullet-large"><strong>700+ millones</strong> de cámaras IA</p>
+                    <p>Sistema de crédito social</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4><span class="country-flag">🇺🇸</span>Estados Unidos</h4>
+                    <p class="bullet-large"><strong>5 mil millones</strong> registros/día</p>
+                    <p>Programas NSA + Big Tech</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4><span class="country-flag">🇬🇧</span>Reino Unido</h4>
+                    <p class="bullet-large"><strong>1 cámara</strong> por cada 11 personas</p>
+                    <p>6+ millones cámaras CCTV</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>🚨 Resultado:</strong> Erosión sistemática de la privacidad como derecho fundamental</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Dilemas Éticos -->
+        <div class="slide" id="slide-4">
+            <h2>⚖️ Los Grandes Dilemas Éticos</h2>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <h4>🛡️ SEGURIDAD vs. 🔒 PRIVACIDAD</h4>
+                    <p>¿Cuánta libertad sacrificar?</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>🙋 AUTONOMÍA vs. 👁️ CONTROL</h4>
+                    <p>¿Decisiones libres bajo vigilancia?</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>⚖️ JUSTICIA vs. 🚫 DISCRIMINACIÓN</h4>
+                    <p>Algoritmos con sesgos raciales</p>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <p><strong>🚨 Riesgo crítico:</strong> Normalización del <em>"estado panóptico"</em></p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Casos de Estudio -->
+        <div class="slide" id="slide-5">
+            <h2>📋 Casos Reales</h2>
+            
+            <div class="two-column">
+                <div class="key-point">
+                    <h3>🔍 Modelo Autoritario</h3>
+                    <h4>China - Xinjiang</h4>
+                    <ul class="bullet-large">
+                        <li><strong>Vigilancia étnica</strong> masiva</li>
+                        <li><strong>1.4 mil millones</strong> bajo control total</li>
+                        <li><strong>Campos de "reeducación"</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="key-point">
+                    <h3>🔍 Vigilancia "Democrática"</h3>
+                    <h4>Occidente</h4>
+                    <ul class="bullet-large">
+                        <li><strong>Pegasus:</strong> Espionaje a periodistas</li>
+                        <li><strong>Clearview AI:</strong> 30 mil millones fotos</li>
+                        <li><strong>Amazon:</strong> Reconocimiento facial policial</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>📊 Realidad:</strong> Ambos modelos convergen hacia el control total</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Marco Legal -->
+        <div class="slide" id="slide-6">
+            <h2>📋 El Vacío Normativo</h2>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <h4>🇪🇺 RGPD (2018)</h4>
+                    <p>Protección limitada</p>
+                    <p><em>Excepciones por "seguridad"</em></p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>🤖 AI Act (2024)</h4>
+                    <p>Primer paso regulatorio</p>
+                    <p><em>Insuficiente alcance</em></p>
+                </div>
+
+            </div>
+            
+            <div class="warning">
+                <h3>⚠️ El problema central:</h3>
+                <p><strong>La tecnología avanza a 100 km/h, las leyes a 10 km/h</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 7: El Negocio -->
+        <div class="slide" id="slide-7">
+            <h2>🏢 El Negocio de los Datos</h2>
+            
+            <div class="key-point">
+                <h3>💰 "Los datos son el nuevo petróleo"</h3>
+                <p><strong>Google genera $280 mil millones anuales</strong> vendiendo nuestra atención</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <h4>🔧 Proveedores</h4>
+                    <ul>
+                        <li><strong>Google:</strong> IA y análisis</li>
+                        <li><strong>Amazon:</strong> Nube y reconocimiento</li>
+                        <li><strong>Microsoft:</strong> Contratos gubernamentales</li>
+                    </ul>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>🤝 Colaboración Público-Privada</h4>
+                    <ul>
+                        <li><strong>Contratos</strong> multimillonarios</li>
+                        <li><strong>Intercambio</strong> de datos</li>
+                        <li><strong>Puerta giratoria</strong> ejecutivos ↔ gobierno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Impacto Social -->
+        <div class="slide" id="slide-8">
+            <h2>👥 Consecuencias Sociales</h2>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <h4>🤐 Autocensura</h4>
+                    <p>Las personas modifican su comportamiento</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>💔 Erosión de Confianza</h4>
+                    <p>Paranoia y sospecha generalizada</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>📉 Menos Participación</h4>
+                    <p>Reducción de protestas y activismo</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>😶 Normalización</h4>
+                    <p>"Si no tienes nada que ocultar..."</p>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <p><strong>📊 Paradoja:</strong> Mayor vigilancia ≠ Mayor seguridad real</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Soluciones -->
+        <div class="slide" id="slide-9">
+            <h2>🛡️ Vigilancia Ética</h2>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <h4>⚖️ PROPORCIONALIDAD</h4>
+                    <p>Solo para amenazas específicas</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>🔍 TRANSPARENCIA</h4>
+                    <p>Ciudadanos informados</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>👨‍⚖️ SUPERVISIÓN</h4>
+                    <p>Control judicial independiente</p>
+                </div>
+                
+                <div class="stat-box">
+                    <h4>⏰ LIMITACIÓN TEMPORAL</h4>
+                    <p>Borrado automático</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <h3>🔧 Tecnologías que respetan la privacidad:</h3>
+                <p><strong>Es posible detectar amenazas sin vulnerar derechos</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Conclusiones -->
+        <div class="slide" id="slide-10">
+            <h2>🎯 Conclusiones Clave</h2>
+            
+            <div class="conclusion-box">
+                <ol class="bullet-large">
+                    <li><strong>La vigilancia masiva es global</strong> y afecta a miles de millones</li>
+                    <li><strong>Las leyes van rezagadas</strong> frente a la tecnología</li>
+                    <li><strong>China marca tendencia</strong>, Occidente adapta el modelo</li>
+                    <li><strong>Las Big Tech son cómplices</strong> del sistema de vigilancia</li>
+                    <li><strong>La sociedad civil debe actuar</strong> para defender sus derechos</li>
+                </ol>
+            </div>
+            
+            <div class="quote">
+                <strong>La pregunta no es si la tecnología PUEDE vigilarnos, sino si nosotros DECIDIMOS permitirlo</strong>
+            </div>
+        </div>
+
+        <!-- Slide 11: Bibliografía -->
+        <div class="slide" id="slide-11">
+            <h2>📚 Fuentes Académicas</h2>
+            <p class="subtitle">Investigaciones recientes (2020-2025)</p>
+            
+            <div class="bibliography">
+                <p><strong>1.</strong> "Vigilancia a través de la IA y big data: retos para garantizar los derechos humanos" (2024) - <em>Revista Ciencias INACIPE</em></p>
+                
+                <p><strong>2.</strong> "AI and Data Surveillance: Embedding a Human Rights-based Approach" (2025) - <em>Cambridge University Press</em></p>
+                
+                <p><strong>3.</strong> "Silicon Valley enabled brutal mass detention in China" (2024) - <em>Associated Press Investigation</em></p>
+                
+                <p><strong>4.</strong> "The Right to Privacy in the Digital Age" (2024) - <em>UN Human Rights Council</em></p>
+                
+                <p><strong>5.</strong> "Surveillance Technology and Human Rights" (2023) - <em>Amnesty International</em></p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Gracias -->
+        <div class="slide" id="slide-12">
+            <h1>¡Gracias por su Atención!</h1>
+            
+            <div class="quote">
+                <p>🤔 <strong>"El futuro no está escrito en código, está escrito en las decisiones que tomemos hoy"</strong></p>
+            </div>
+            
+            <div class="authors">
+                <h3>💬 Preguntas y Comentarios</h3>
+                <p>Emanuel Buritica • Wilber Pineda • Edna Castañeda</p>
+            </div>
+            
+            <div class="key-point">
+                <p><strong>🔍 Para profundizar:</strong> Consulten las fuentes académicas de la bibliografía</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">12</span>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="previousSlide()">← Anterior</button>
+        <button class="nav-btn" id="next-btn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const currentSlideElement = document.getElementById(`slide-${currentSlide}`);
+            const nextSlideElement = document.getElementById(`slide-${n}`);
+            
+            if (currentSlideElement) {
+                currentSlideElement.classList.remove('active');
+            }
+            
+            if (nextSlideElement) {
+                nextSlideElement.classList.add('active');
+                currentSlide = n;
+            }
+            
+            document.getElementById('current-slide').textContent = currentSlide;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentSlide === 1;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        document.getElementById('total-slides').textContent = totalSlides;
+        showSlide(1);
+    </script>
+</body>
+</html>
